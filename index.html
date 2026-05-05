@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Стереометрия — 11 класс</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&family=Quicksand:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #F5F8FA 0%, #F8FAF5 50%, #F5F8FC 100%);
+            padding: 40px 20px;
+            color: #4A5560;
+            /* Убрано: position:fixed, background-attachment:fixed — не работают в Google Sites */
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* ─── Заголовок ─── */
+        .main-header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding: 40px 30px;
+            background: linear-gradient(135deg, #F8FAFB 0%, #F5F7F9 100%);
+            border-radius: 25px;
+            box-shadow: 0 8px 30px rgba(74, 85, 96, 0.12);
+            border: 2px solid #C5D0D8;
+        }
+
+        .main-header h1 {
+            color: #4A6B7C;
+            font-size: clamp(1.8em, 4vw, 3em);
+            font-weight: 700;
+            letter-spacing: 4px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+
+        .main-header .subtitle {
+            color: #6A7B8C;
+            font-size: clamp(1em, 2vw, 1.4em);
+            font-weight: 500;
+            font-family: 'Quicksand', sans-serif;
+            letter-spacing: 2px;
+        }
+
+        /* ─── Разделы ─── */
+        .nav-section {
+            margin-bottom: 50px;
+        }
+
+        .section-title {
+            display: table;
+            margin: 0 auto 35px;
+            color: #4A6B7C;
+            font-size: clamp(1.2em, 2.5vw, 1.9em);
+            font-weight: 600;
+            padding: 14px 35px;
+            background: linear-gradient(135deg, #E8F0F4 0%, #E0E8EC 100%);
+            border-radius: 20px;
+            border: 2px solid #A8B8C0;
+        }
+
+        /* ─── Карточки ─── */
+        .nav-cards {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .nav-card {
+            background: #FFFFFF;
+            border-radius: 25px;
+            padding: 35px 28px;
+            box-shadow: 0 8px 30px rgba(74, 85, 96, 0.10);
+            text-align: center;
+            flex: 1;
+            min-width: 270px;
+            max-width: 340px;
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            border: 2px solid;
+        }
+
+        .nav-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 45px rgba(74, 85, 96, 0.18);
+        }
+
+        /* Цвета рамок */
+        .multigran-card  { border-color: #8FB8C8; }
+        .rotation-card   { border-color: #7FA8B8; }
+        .problems-card   { border-color: #8FB8A0; }
+        .reference-card  { border-color: #B095C0; background: linear-gradient(135deg, #FFFFFF, #F9F7FA); }
+
+        .multigran-card:hover  { border-color: #6A95A8; }
+        .rotation-card:hover   { border-color: #5A85A0; }
+        .problems-card:hover   { border-color: #6A9580; }
+        .reference-card:hover  { border-color: #9075A8; }
+
+        /* ─── Иконка / картинка ─── */
+        .nav-card-icon {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+            border: 3px solid;
+            overflow: hidden;           /* картинки не вылезают за круг */
+            flex-shrink: 0;
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        /* Если внутри иконки стоит <img> — растянуть на весь круг */
+        .nav-card-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            display: block;
+        }
+
+        .nav-card:hover .nav-card-icon { animation: none; transform: scale(1.08); }
+
+        .icon-multigran  { background: linear-gradient(135deg, #B8D8E8, #A0C8D8); border-color: #7A9FB0; }
+        .icon-rotation   { background: linear-gradient(135deg, #A0C8D8, #88B8C8); border-color: #6A8FA0; }
+        .icon-problems   { background: linear-gradient(135deg, #B0D8C0, #98C8A8); border-color: #7A9F8A; }
+        .icon-reference  { background: linear-gradient(135deg, #D0B8E0, #B8A0D0); border-color: #9075A0; }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50%       { transform: scale(1.06); }
+        }
+
+        /* ─── Заголовки карточек ─── */
+        .nav-card h2 {
+            font-size: clamp(1.2em, 2vw, 1.7em);
+            font-weight: 600;
+            font-family: 'Quicksand', sans-serif;
+            margin-bottom: 12px;
+            letter-spacing: 1px;
+        }
+
+        .multigran-card h2  { color: #4A6B7C; }
+        .rotation-card h2   { color: #3A5B6C; }
+        .problems-card h2   { color: #3A5B5C; }
+        .reference-card h2  { color: #5C4A6C; }
+
+        .nav-card p {
+            color: #5A6B7C;
+            font-size: 0.97em;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        /* ─── Кнопки ─── */
+        .btn-enter {
+            padding: 11px 32px;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 25px;
+            text-decoration: none;
+            display: inline-block;
+            transition: transform 0.25s ease, filter 0.25s ease;
+            letter-spacing: 1px;
+            border: 2px solid;
+            margin-top: auto;
+        }
+
+        .multigran-card .btn-enter  { background: linear-gradient(135deg, #B8D8E8, #A0C8D8); color: #3A4A5A; border-color: #7A9FB0; }
+        .rotation-card .btn-enter   { background: linear-gradient(135deg, #A0C8D8, #88B8C8); color: #2A3A4A; border-color: #6A8FA0; }
+        .problems-card .btn-enter   { background: linear-gradient(135deg, #B0D8C0, #98C8A8); color: #2A3A3A; border-color: #7A9F8A; }
+        .reference-card .btn-enter  { background: linear-gradient(135deg, #D0B8E0, #B8A0D0); color: #3A2A4A; border-color: #9075A0; }
+
+        .btn-enter:hover { transform: translateY(-3px); filter: brightness(0.96); }
+
+        /* ─── Бейджи ─── */
+        .badge {
+            position: absolute;
+            top: 14px;
+            right: 14px;
+            padding: 5px 13px;
+            border-radius: 15px;
+            font-size: 0.72em;
+            font-weight: 600;
+            font-family: 'Quicksand', sans-serif;
+            letter-spacing: 1px;
+            color: #fff;
+        }
+
+        .badge-theory    { background: linear-gradient(135deg, #A0C0D0, #88B0C0); }
+        .badge-practice  { background: linear-gradient(135deg, #88C0A0, #70B088); }
+        .badge-important { background: linear-gradient(135deg, #B898C8, #A080B8); }
+
+        /* ─── Разделитель ─── */
+        .divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #A8B8C0, transparent);
+            margin: 45px 0;
+            border-radius: 2px;
+        }
+
+        /* ─── Быстрые ссылки ─── */
+        .quick-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 28px;
+        }
+
+        .quick-link {
+            padding: 9px 22px;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            border-radius: 20px;
+            text-decoration: none;
+            transition: transform 0.25s ease, filter 0.25s ease;
+            border: 2px solid;
+        }
+
+        .quick-link.multigran  { background: linear-gradient(135deg, #E0E8EC, #D8E0E5); color: #4A6B7C; border-color: #A8B8C0; }
+        .quick-link.rotation   { background: linear-gradient(135deg, #D8E4E8, #D0E0E5); color: #3A5B6C; border-color: #98A8B0; }
+        .quick-link.reference  { background: linear-gradient(135deg, #E8E0EC, #E0D8E5); color: #5C4A6C; border-color: #A895B0; }
+
+        .quick-link:hover { transform: translateY(-2px); filter: brightness(0.96); }
+
+        /* ─── Адаптив ─── */
+        @media (max-width: 768px) {
+            body { padding: 20px 14px; }
+
+            .nav-cards {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .nav-card {
+                width: 100%;
+                max-width: 100%;
+                min-width: unset;
+            }
+
+            .quick-links {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .quick-link { width: 100%; max-width: 280px; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <!-- ═══ ЗАГОЛОВОК ═══ -->
+    <header class="main-header">
+        <h1>Стереометрия</h1>
+        <p class="subtitle">Геометрия в пространстве</p>
+    </header>
+
+    <!-- ═══ ТЕОРИЯ ═══ -->
+    <section class="nav-section">
+        <h2 class="section-title">📚 Теоретический материал</h2>
+        <div class="nav-cards">
+
+            <!-- Многогранники -->
+            <a href="C:\Users\User\Desktop\коды сайт\код1\mnogograniki.html" class="nav-card multigran-card">
+                <span class="badge badge-theory">Теория</span>
+
+                <!--
+                    ИКОНКА: сейчас стоит эмодзи 🔷
+                    Чтобы вставить КАРТИНКУ — замените строку с эмодзи на:
+                    <img src="URL_ВАШЕЙ_КАРТИНКИ" alt="Многогранники">
+                    Пример:
+                    <img src="https://example.com/cube.png" alt="Многогранники">
+                -->
+                <div class="nav-card-icon icon-multigran">
+                    🔷
+                    <!-- <img src="URL_КАРТИНКИ" alt="Многогранники"> -->
+                </div>
+
+                <h2>Многогранники</h2>
+                <p>Параллелепипед · Призма · Пирамида<br>Свойства · Формулы · Сечения</p>
+                <span class="btn-enter">Перейти →</span>
+            </a>
+
+            <!-- Тела вращения -->
+            <a href="C:\Users\User\Desktop\коды сайт\код1/tela-vrasheniya.html" class="nav-card rotation-card">
+                <span class="badge badge-theory">Теория</span>
+
+                <div class="nav-card-icon icon-rotation">
+                    🔵
+                    <!-- <img src="URL_КАРТИНКИ" alt="Тела вращения"> -->
+                </div>
+
+                <h2>Тела вращения</h2>
+                <p>Сфера · Цилиндр · Конус<br>Свойства · Формулы · Комбинации</p>
+                <span class="btn-enter">Перейти →</span>
+            </a>
+
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ═══ ПРАКТИКА ═══ -->
+    <section class="nav-section">
+        <h2 class="section-title">✏️ Практика и справочные материалы</h2>
+        <div class="nav-cards">
+
+            <!-- Задачник -->
+            <a href="C:\Users\User\Desktop\коды сайт\код1/zadachnik.html" class="nav-card problems-card">
+                <span class="badge badge-practice">Практика</span>
+
+                <div class="nav-card-icon icon-problems">
+                    📝
+                    <!-- <img src="URL_КАРТИНКИ" alt="Задачник"> -->
+                </div>
+
+                <h2>Задачник</h2>
+                <p>5 уровней сложности<br>Все темы стереометрии<br>Подготовка к ЦТ</p>
+                <span class="btn-enter">Решать →</span>
+            </a>
+
+            <!-- Справочник -->
+            <a href="C:\Users\User\Desktop\коды сайт\код1/spravochnik.html" class="nav-card reference-card">
+                <span class="badge badge-important">Важно</span>
+
+                <div class="nav-card-icon icon-reference">
+                    📖
+                    <!-- <img src="URL_КАРТИНКИ" alt="Справочник"> -->
+                </div>
+
+                <h2>Справочник</h2>
+                <p>Все формулы · Теоремы<br>Определения · Свойства<br>Для подготовки к ЦТ</p>
+                <span class="btn-enter">Открыть справочник →</span>
+            </a>
+
+        </div>
+
+        <!-- Быстрые ссылки -->
+        <div class="quick-links">
+            <a href="#" class="quick-link multigran">▸ Параллелепипед</a>
+            <a href="#" class="quick-link multigran">▸ Призма</a>
+            <a href="#" class="quick-link multigran">▸ Пирамида</a>
+            <a href="#" class="quick-link rotation">▸ Сфера</a>
+            <a href="#" class="quick-link rotation">▸ Цилиндр</a>
+            <a href="#" class="quick-link rotation">▸ Конус</a>
+            <a href="C:\Users\User\Desktop\коды сайт\код1/spravochnik.html" class="quick-link reference">📖 Справочник</a>
+        </div>
+    </section>
+
+</div>
+</body>
+</html>
